@@ -30,9 +30,8 @@ def augmentAruco(bbox, id, img, imgAug, drawId=True):
     imgOut=img+imgOut
     return imgOut
 
-def maincode(image)
-     cap = image
-     imgAug=cv2.imread("red.png")
+cap = image
+imgAug=cv2.imread("red.png")
 
 #augdics=loadAugImages("Markers")
 toggle = 0
