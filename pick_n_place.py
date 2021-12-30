@@ -136,7 +136,7 @@ def main():
     sp2.position.z = 3
     sp3.position.x = 3
     sp3.position.y = 0
-    sp3.position.z = -1
+    sp3.position.z = -1.5
     sp4.position.x = 3
     sp4.position.y = 3
     sp4.position.z = 3
@@ -145,10 +145,11 @@ def main():
     sp5.position.z = -1
     sp6.position.x = 0
     sp6.position.y = 0
-    sp6.position.z = -1
+    sp6.position.z = -1.5
     setpoints.append(sp1)
     setpoints.append(sp2)
     setpoints.append(sp3)
+    setpoints.append(sp2)
     setpoints.append(sp4)
     setpoints.append(sp5)
     setpoints.append(sp4)
@@ -227,21 +228,29 @@ def main():
             #     local_pos_pub.publish(pos)
             #     rate.sleep()
             # local_vel_pub.publish(vel)
-            if r <= 0.5 and i < 6:
+            if r <= 0.5 and i < 7:
 
                 i += 1
                 if i == 3:
                     grip_val = rospy.Subscriber('/gripper_check', String)
+                    c = 0
                     while grip_val != 'True':
                         ofb_ctl.gripper_True()
+                        c += 1
+                        if c == 15:
+                            break;
                         pos.pose.position = setpoints[i].position
                         stateMt.sp = setpoints[i]
                         rate.sleep()
 
 
-                elif i == 5:
+                elif i == 6:
                     grip_val = rospy.Subscriber('/gripper_check', String)
+                    c = 0
                     while grip_val != 'False':
+                        c += 1
+                        if c == 15:
+                            break;
                         ofb_ctl.gripper_False()
                         pos.pose.position = setpoints[i].position
                         stateMt.sp = setpoints[i]
@@ -254,22 +263,30 @@ def main():
                     local_pos_pub.publish(pos)
                     rate.sleep()
                 break;
-            elif i < 6:
+            elif i < 7:
                 # print("21")
 
                 i += 1
                 if i == 3:
                     grip_val = rospy.Subscriber('/gripper_check', String)
+                    c = 0
                     while grip_val != 'True':
                         ofb_ctl.gripper_True()
+                        c += 1
+                        if c == 15:
+                            break;
                         pos.pose.position = setpoints[i].position
                         stateMt.sp = setpoints[i]
                         rate.sleep()
 
-                elif i == 5:
+                elif i == 6:
                     grip_val = rospy.Subscriber('/gripper_check', String)
+                    c = 0
                     while grip_val != 'False':
                         ofb_ctl.gripper_False()
+                        c += 1
+                        if c == 15:
+                            break;
                         pos.pose.position = setpoints[i].position
                         stateMt.sp = setpoints[i]
                         rate.sleep()
@@ -282,7 +299,7 @@ def main():
                 break;
         local_pos_pub.publish(pos)
         print("check2")
-        if i == 6:
+        if i == 7:
             ofb_ctl.setAutoLandMode()
             rate.sleep()
             for j in range(300):
@@ -290,7 +307,7 @@ def main():
                 rate.sleep()
             ofb_ctl.setDisarm()
 
-        if i == 6:
+        if i == 7:
             break;
         # local_vel_pub.publish(vel)
         rate.sleep()
